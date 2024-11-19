@@ -45,7 +45,7 @@ Ensure the following are installed on your machine:
 ### Running the Application
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/bachiriy/citronix
    cd Citronix
 2. Build and run the application:
     ```bash
