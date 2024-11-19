@@ -60,6 +60,7 @@ Ensure the following are installed on your machine:
 
 ## Example Usage
 ### Farm Creation
+1. Add fram:
     ```bash
     POST /farms
     {
@@ -79,10 +80,5 @@ Ensure the following are installed on your machine:
 2. View tree productivity: 
     ```bash
     GET /trees/1/productivity
---
-## Contact
-    For any queries or support, please contact:
-    support@citronix.com
-    +1-800-CITRON
-- --
-<sup>Created by **Bachiriy**</sup>
+---
+<sup>Author: **Bachiriy**</sup>
