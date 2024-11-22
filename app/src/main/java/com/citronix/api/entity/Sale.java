@@ -11,25 +11,30 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "sales")
 public class Sale {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "sale_date")
+    @NotNull(message = "saleDate is required")
     private LocalDate saleDate;
 
     @Column(name = "quantity_kg")
     private Double quantityKg;
 
     @Column(name = "unit_price")
+    @NotNull(message = "unitPrice is required")
     private Double unitPrice;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "harvest_id")
     @NotNull(message = "harvest is required")
     private Harvest harvest;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
     @NotNull(message = "must be sold to a client")
     private Client client;
 }

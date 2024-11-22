@@ -10,9 +10,10 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "clients")
 public class Client {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull(message = "name required")
@@ -24,5 +25,6 @@ public class Client {
     @NotNull(message = "email required")
     private String email;
 
+    @OneToMany(mappedBy = "client")
     private List<Sale> sales;
 }

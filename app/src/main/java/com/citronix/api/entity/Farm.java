@@ -3,21 +3,27 @@ package com.citronix.api.entity;
 import java.time.*;
 import java.util.*;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import lombok.*;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Table(name = "farms")
 public class Farm {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "created_at", updatable = false, nullable = false)
+    @CreationTimestamp
+    private LocalDate createdAt;
 
     @NotNull(message = "name is required")
     private String name;
@@ -26,13 +32,12 @@ public class Farm {
     private String location;
     
     @Column(name = "area_m2")
+    @NotNull(message = "areaM2 is required")
+    @Min(message = "areaM2 must be at least 1000 m2", value = 1000)
+    @Positive(message = "areaM2 must be positive")
     private Double areaM2;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "created_date")    
-    private LocalDate createdDate;
-
-    @OneToMany
+    @OneToMany(mappedBy = "farm")
     private List<Field> fields;
 
 }

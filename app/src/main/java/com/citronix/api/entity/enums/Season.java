@@ -1,5 +1,5 @@
 package com.citronix.api.entity.enums;
 
-public enum Saison {
+public enum Season {
     WINTER, SPRING, SUMMER, AUTUMN
 }
