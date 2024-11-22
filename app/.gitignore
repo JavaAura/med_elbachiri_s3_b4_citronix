@@ -35,3 +35,6 @@ zDOCS
 target/
 HELP.md
 mvnw.cmd
+.mvn/
+mvnw*
+run.sh*
