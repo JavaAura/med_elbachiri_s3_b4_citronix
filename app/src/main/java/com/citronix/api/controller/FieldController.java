@@ -21,12 +21,12 @@ public class FieldController {
         return service.getAll();
     }
     @GetMapping("/{id}")
-    public Field get(@PathVariable Long id){
+    public FieldGetDto get(@PathVariable Long id){
         return service.findById(id);
     }
 
     @PostMapping
-    public Field post(@Valid @RequestBody FieldPostDto postDto){
+    public FieldGetDto post(@Valid @RequestBody FieldPostDto postDto){
         return service.add(postDto);
     }
 

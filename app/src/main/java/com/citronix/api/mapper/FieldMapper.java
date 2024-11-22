@@ -10,7 +10,7 @@ import com.citronix.api.mapper.use.BaseMapper;
 import com.citronix.api.service.FarmService;
 
 @Mapper(componentModel = "spring", uses = {FarmService.class})
-public interface FieldMapper {
+public interface FieldMapper extends BaseMapper<Field, FieldPostDto, FieldGetDto> {
 
     @Mapping(source = "farmId", target = "farm")
     Field toEntity(FieldPostDto postDto);
