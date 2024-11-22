@@ -11,21 +11,25 @@ import lombok.*;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "trees")
 public class Tree {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "planting_date")
     @NotNull(message = "planting date is required")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @PlantingPeriod // TODO: add PlantingPeriod annotation to verivy this date is between March and May (3-5)  
     private LocalDate plantingDate;
+    //@PlantingPeriod // TODO: add PlantingPeriod annotation to verivy this date is between March and May (3-5)  
 
     @Column(name = "age_at_time_of_planting")
     private int ageAtTimeOfPlanting; // if not provided, this means a new in life tree
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "field_id")
     @NotNull(message = "must be associated with a field")
     private Field field;
 
