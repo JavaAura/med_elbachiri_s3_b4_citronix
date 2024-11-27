@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,32 +14,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.citronix.api.dto.get.FarmGetDto;
-import com.citronix.api.dto.post.FarmPostDto;
-import com.citronix.api.service.FarmService;
+import com.citronix.api.dto.get.ClientGetDto;
+import com.citronix.api.dto.post.ClientPostDto;
+import com.citronix.api.service.ClientService;
 
 @RestController
-@RequestMapping("/api/farms")
-public class FarmController {
-
-    @Autowired FarmService service;
-
+@RequestMapping("/api/clients")
+public class ClientController {
+    @Autowired ClientService service;
+   
     @GetMapping
-    public List<FarmGetDto> all(){
+    public List<ClientGetDto> all() {
         return service.getAll();
     }
+
     @GetMapping("/{id}")
-    public FarmGetDto get(@PathVariable Long id){
+    public ClientGetDto get(@PathVariable Long id){
         return service.findById(id);
     }
 
     @PostMapping
-    public FarmGetDto post(@Valid @RequestBody FarmPostDto dto){
+    public ClientGetDto post(@Valid @RequestBody ClientPostDto dto){
         return service.add(dto);
     }
 
     @PatchMapping("/{id}")
-    public FarmGetDto patch(@Valid @PathVariable Long id, @RequestBody FarmPostDto postDto){
+    public ClientGetDto patch(@Valid @PathVariable Long id, @RequestBody ClientPostDto postDto){
         return service.update(id, postDto);
     }
 

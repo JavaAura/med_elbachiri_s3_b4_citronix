@@ -3,7 +3,9 @@ package com.citronix.api.entity;
 import java.time.LocalDate;
 import java.util.*;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -29,6 +31,8 @@ public class Field {
     
     @Column(name = "area_m2")
     @NotNull(message = "areaM2 is required")
+    @Min(message = "areaM2 must be at least 1000 m2", value = 1000)
+    @Positive(message = "areaM2 must be positive")
     private Double areaM2;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,5 +45,8 @@ public class Field {
 
     @OneToMany(mappedBy = "field")
     private List<Harvest> harvests;
+
+    public int getTreesCount(){ return this.trees != null ? this.trees.size() : 0; }
+    public int getHarvestsCount(){ return this.harvests != null ? this.harvests.size() : 0; }
     
 }

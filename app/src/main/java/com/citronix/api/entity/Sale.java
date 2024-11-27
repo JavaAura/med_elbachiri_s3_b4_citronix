@@ -28,9 +28,9 @@ public class Sale {
     @NotNull(message = "unitPrice is required")
     private Double unitPrice;
     
+    @NotNull(message = "harvest is required")
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "harvest_id")
-    @NotNull(message = "harvest is required")
     private Harvest harvest;
 
     @ManyToOne(fetch = FetchType.LAZY)
