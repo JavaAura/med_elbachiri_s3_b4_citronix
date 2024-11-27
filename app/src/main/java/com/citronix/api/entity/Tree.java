@@ -22,8 +22,8 @@ public class Tree {
     @Column(name = "planting_date")
     @NotNull(message = "planting date is required")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @PlantingPeriod
     private LocalDate plantingDate;
-    //@PlantingPeriod // TODO: add PlantingPeriod annotation to verivy this date is between March and May (3-5)  
 
     @Column(name = "age_at_time_of_planting")
     private int ageAtTimeOfPlanting; // if not provided, this means a new in life tree
@@ -42,9 +42,9 @@ public class Tree {
         int age = getAge();
         if (age < 3) {
             return 2.5;
-        } else if (age > 3 && age < 10) {
+        } else if (age >= 3 && age <= 10) {
             return 12.0; 
-        } else if (age > 10 && age < 20) {
+        } else if (age > 10 && age <= 20) {
             return 20.0; 
         } else { return 0.0; } // unproductive
     }

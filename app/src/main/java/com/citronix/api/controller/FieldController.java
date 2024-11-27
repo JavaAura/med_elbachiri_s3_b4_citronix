@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.citronix.api.dto.get.FieldGetDto;
 import com.citronix.api.dto.post.FieldPostDto;
-import com.citronix.api.entity.Field;
 import com.citronix.api.service.FieldService;
 
 @RestController
@@ -31,7 +30,7 @@ public class FieldController {
     }
 
     @PatchMapping("/{id}")
-    public Field patch(@PathVariable Long id, @RequestBody FieldPostDto postDto){
+    public FieldGetDto patch(@PathVariable Long id, @RequestBody FieldPostDto postDto){
         return service.update(id, postDto);
     }
 

@@ -3,13 +3,10 @@ package com.citronix.api.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -17,10 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.citronix.api.exception.ElementAlreadyExistException;
-import com.citronix.api.exception.ElementDuplicationException;
-import com.citronix.api.exception.ElementNotFoundException;
-
+import com.citronix.api.exception.*;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -97,23 +91,45 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_GATEWAY)
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public Response handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+    @ExceptionHandler(InvalidDataException.class)
+    public Response handleInvalidDataException(InvalidDataException ex) {
         log.info(ex.getMessage());
-        Pattern check = Pattern.compile("`com.citronix.api.entity.[\\w]+");
-        Matcher checker = check.matcher(ex.getMessage());
-        String error = ex.getMessage();
-        while (checker.find()) {
-            String[] tmp = checker.group(0).split("\\.");
-            error = "This " + tmp[tmp.length -1] + " does not exist.";
-        }
-
         return Response.builder()
             .code(HttpStatus.BAD_GATEWAY.value())
             .status(HttpStatus.BAD_GATEWAY.name())
-            .errors(Arrays.asList(error))
+            .errors(Arrays.asList(ex.getMessage()))
             .build();
     }
+
+    // @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    // @ExceptionHandler(NoSuchElementException.class)
+    // public Response handleNoSuchElementException(NoSuchElementException ex) {
+    //     log.info(ex.getMessage());
+    //     return Response.builder()
+    //         .code(HttpStatus.BAD_GATEWAY.value())
+    //         .status(HttpStatus.BAD_GATEWAY.name())
+    //         .errors(Arrays.asList(ex.getLocalizedMessage() + " " + ex.getMessage()))
+    //         .build();
+    // }
+
+    // @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    // @ExceptionHandler(NoSuchElementException.class)
+    // public Response handleNoSuchElementException(NoSuchElementException ex) {
+    //     log.info(ex.getMessage());
+    //     Pattern check = Pattern.compile("`com.citronix.api.entity.[\\w]+");
+    //     Matcher checker = check.matcher(ex.getMessage());
+    //     String error = ex.getMessage();
+    //     while (checker.find()) {
+    //         String[] tmp = checker.group(0).split("\\.");
+    //         error = "This " + tmp[tmp.length -1] + " does not exist.";
+    //     }
+
+    //     return Response.builder()
+    //         .code(HttpStatus.BAD_GATEWAY.value())
+    //         .status(HttpStatus.BAD_GATEWAY.name())
+    //         .errors(Arrays.asList(error))
+    //         .build();
+    // }
     
 }
 

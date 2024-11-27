@@ -12,5 +12,7 @@ public class FarmGetDto {
     String name;
     String location;
     Double areaM2;
-    List<FieldGetDto> fieldDtos;
+    int numberOfFields;
+    // int areaLeft;
+    List<FieldGetDto> fields;
 }
