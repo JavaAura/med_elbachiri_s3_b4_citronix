@@ -8,5 +8,5 @@ import java.time.LocalDate;
 
 @Repository
 public interface SaleRepository extends JpaRepository<Sale, Long> {
-    Sale findBySaleDate(LocalDate saleDate);
+    Sale findByHarvestId(Long harvestId);
 }

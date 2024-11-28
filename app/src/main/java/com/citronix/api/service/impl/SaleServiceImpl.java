@@ -27,10 +27,12 @@ public class SaleServiceImpl implements SaleService {
         return repository.findById(id).map(mapper::toDto).orElseThrow(() -> new ElementNotFoundException(Sale.class, id));
     }
     public SaleGetDto add(SalePostDto dto){
-        Sale findSale = repository.findBySaleDate(dto.getSaleDate());
+        Sale findSale = repository.findByHarvestId(dto.getHarvestId());
         if (findSale == null) {
-            return mapper.toDto(repository.save(mapper.toEntity(dto)));
-        } else throw new ElementDuplicationException();
+            Sale sale = mapper.toEntity(dto);
+            sale.setQuantityKg(sale.getHarvest().getQuantityKg());
+            return mapper.toDto(repository.save(sale));
+        } else throw new InvalidDataException("The harvest was already sold.");
     }
 
     public SaleGetDto update(Long id, SalePostDto postDto){

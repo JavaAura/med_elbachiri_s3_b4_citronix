@@ -31,6 +31,9 @@ public class Harvest {
     @Column(name = "harvest_year") // 'year' is ordered by db
     private Integer harvestYear;
 
+    @Column(name = "quantity_kg")
+    private Double quantityKg;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "field_id")
     @NotNull(message = "must be associated with a 'field'")
@@ -39,7 +42,7 @@ public class Harvest {
     @OneToOne(mappedBy = "harvest")
     private Sale sale;
 
-    public Double getQuantityKg() {
+    public Double figureOutQuantityKg() {
         return field.getTrees().stream().mapToDouble(tree -> tree.getProductivity()).sum();
     }
 }

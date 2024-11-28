@@ -1,6 +1,6 @@
 package com.citronix.api.service.impl;
 import java.util.List;
-import java.util.stream.Collectors;
+// import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +34,7 @@ public class HarvestServiceImpl implements HarvestService {
             Harvest harvest = mapper.toEntity(dto);
             harvest.setSeason(validator.figureOutSeason(harvest.getHarvestDate()));
             harvest.setHarvestYear(harvest.getHarvestDate().getYear());
+            harvest.setQuantityKg(harvest.figureOutQuantityKg());
 
             return mapper.toDto(repository.save(harvest));
         } else throw new InvalidDataException("This field was already been harvested in this season in the year.");
