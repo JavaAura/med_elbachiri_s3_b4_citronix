@@ -21,7 +21,8 @@ public class HarvestServiceImpl implements HarvestService {
     @Autowired HarvestValidator validator;
 
     public List<HarvestGetDto> getAll(){
-        return repository.findAll().stream().map(farm -> mapper.toDto(farm)).collect(Collectors.toList());
+        // return repository.findAll().stream().map(farm -> mapper.toDto(farm)).collect(Collectors.toList());
+        return mapper.toDtos(repository.findAll());
     }
 
     public HarvestGetDto findById(Long id){
