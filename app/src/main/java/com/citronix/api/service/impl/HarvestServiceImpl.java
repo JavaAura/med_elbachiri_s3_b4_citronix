@@ -42,8 +42,13 @@ public class HarvestServiceImpl implements HarvestService {
 
     public HarvestGetDto update(Long id, HarvestPostDto postDto){
         findById(id);
-        postDto.setId(id);
-        return mapper.toDto(repository.save(mapper.toEntity(postDto)));
+        Harvest harvest = mapper.toEntity(postDto);
+        harvest.setId(id);
+        harvest.setSeason(validator.figureOutSeason(harvest.getHarvestDate()));
+        harvest.setHarvestYear(harvest.getHarvestDate().getYear());
+        harvest.setQuantityKg(harvest.figureOutQuantityKg());
+        // harvest.setSale(harvest.getSale());
+        return mapper.toDto(repository.save(harvest));
     }
 
     public void delete(Long id){

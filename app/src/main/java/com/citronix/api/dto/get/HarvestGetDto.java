@@ -17,4 +17,6 @@ public class HarvestGetDto {
     Long fieldId;
     Long saleId;
     Double quantityKg;
+    Double unitPrice;
+    Double income;
 }

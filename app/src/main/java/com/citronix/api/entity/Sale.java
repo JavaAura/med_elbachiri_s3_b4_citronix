@@ -37,4 +37,10 @@ public class Sale {
     @JoinColumn(name = "client_id")
     @NotNull(message = "must be sold to a client")
     private Client client;
+
+    private Double income;
+
+    public Double figureOutIncome(){
+        return quantityKg * unitPrice;
+    }
 }

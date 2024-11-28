@@ -3,6 +3,8 @@ package com.citronix.api.entity;
 import com.citronix.api.entity.enums.Season;
 
 import java.time.*;
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -41,6 +43,9 @@ public class Harvest {
 
     @OneToOne(mappedBy = "harvest")
     private Sale sale;
+
+    @OneToMany(mappedBy = "harvest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<HarvestDetail> harvestDetails;
 
     public Double figureOutQuantityKg() {
         return field.getTrees().stream().mapToDouble(tree -> tree.getProductivity()).sum();

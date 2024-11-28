@@ -31,6 +31,7 @@ public class SaleServiceImpl implements SaleService {
         if (findSale == null) {
             Sale sale = mapper.toEntity(dto);
             sale.setQuantityKg(sale.getHarvest().getQuantityKg());
+            sale.setIncome(sale.figureOutIncome());
             return mapper.toDto(repository.save(sale));
         } else throw new InvalidDataException("The harvest was already sold.");
     }
@@ -38,7 +39,10 @@ public class SaleServiceImpl implements SaleService {
     public SaleGetDto update(Long id, SalePostDto postDto){
         findById(id);
         postDto.setId(id);
-        return mapper.toDto(repository.save(mapper.toEntity(postDto)));
+        Sale sale = mapper.toEntity(postDto);
+        sale.setIncome(sale.figureOutIncome());
+        sale.setQuantityKg(sale.getHarvest().getQuantityKg());
+        return mapper.toDto(repository.save(sale));
     }
 
     public void delete(Long id){

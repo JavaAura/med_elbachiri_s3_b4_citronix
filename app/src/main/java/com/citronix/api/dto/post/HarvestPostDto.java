@@ -2,14 +2,10 @@ package com.citronix.api.dto.post;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
-
-import com.citronix.api.entity.enums.Season;
 
 
 @Builder
