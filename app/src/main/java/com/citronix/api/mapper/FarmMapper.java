@@ -15,6 +15,5 @@ import com.citronix.api.mapper.use.BaseMapper;
 public interface FarmMapper extends BaseMapper<Farm, FarmPostDto, FarmGetDto> {
     @Mapping(source = "fields", target = "fields")
     @Mapping(source = "fieldsCount", target = "numberOfFields")
-    // @Mapping(source = "java(farm.getAreaM2() - farm.getTotalFieldsArea())", target = "areaLeft")
     FarmGetDto toDto(Farm farm);
 }
