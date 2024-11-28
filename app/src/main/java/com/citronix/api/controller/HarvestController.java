@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.citronix.api.dto.get.HarvestGetDto;
@@ -21,31 +22,32 @@ import com.citronix.api.service.HarvestService;
 @RestController
 @RequestMapping("/api/harvests")
 public class HarvestController {
-    
-    @Autowired HarvestService service;
-   
-    @GetMapping
-    public List<HarvestGetDto> all() {
-        return service.getAll();
-    }
 
-    @GetMapping("/{id}")
-    public HarvestGetDto get(@PathVariable Long id){
-        return service.findById(id);
-    }
+	@Autowired
+	HarvestService service;
 
-    @PostMapping
-    public HarvestGetDto post(@Valid @RequestBody HarvestPostDto dto){
-        return service.add(dto);
-    }
+	@GetMapping
+	public List<HarvestGetDto> all(@RequestParam(name = "page", defaultValue = "0") Integer page) {
+		return service.getAll(page);
+	}
 
-    @PatchMapping("/{id}")
-    public HarvestGetDto patch(@PathVariable Long id, @RequestBody HarvestPostDto postDto){
-        return service.update(id, postDto);
-    }
+	@GetMapping("/{id}")
+	public HarvestGetDto get(@PathVariable Long id) {
+		return service.findById(id);
+	}
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
-        service.delete(id);
-    }
+	@PostMapping
+	public HarvestGetDto post(@Valid @RequestBody HarvestPostDto dto) {
+		return service.add(dto);
+	}
+
+	@PatchMapping("/{id}")
+	public HarvestGetDto patch(@PathVariable Long id, @RequestBody HarvestPostDto postDto) {
+		return service.update(id, postDto);
+	}
+
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable Long id) {
+		service.delete(id);
+	}
 }

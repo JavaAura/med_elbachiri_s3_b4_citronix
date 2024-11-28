@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.citronix.api.dto.get.TreeGetDto;
@@ -21,30 +22,31 @@ import com.citronix.api.service.TreeService;
 @RestController
 @RequestMapping("/api/trees")
 public class TreeController {
-    @Autowired TreeService service;
-   
-    @GetMapping
-    public List<TreeGetDto> all() {
-        return service.getAll();
-    }
+	@Autowired
+	TreeService service;
 
-    @GetMapping("/{id}")
-    public TreeGetDto get(@PathVariable Long id){
-        return service.findById(id);
-    }
+	@GetMapping
+	public List<TreeGetDto> all(@RequestParam(name = "page", defaultValue = "0") Integer page) {
+		return service.getAll(page);
+	}
 
-    @PostMapping
-    public TreeGetDto post(@Valid @RequestBody TreePostDto dto){
-        return service.add(dto);
-    }
+	@GetMapping("/{id}")
+	public TreeGetDto get(@PathVariable Long id) {
+		return service.findById(id);
+	}
 
-    @PatchMapping("/{id}")
-    public TreeGetDto patch(@PathVariable Long id, @RequestBody TreePostDto postDto){
-        return service.update(id, postDto);
-    }
+	@PostMapping
+	public TreeGetDto post(@Valid @RequestBody TreePostDto dto) {
+		return service.add(dto);
+	}
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
-        service.delete(id);
-    }
+	@PatchMapping("/{id}")
+	public TreeGetDto patch(@PathVariable Long id, @RequestBody TreePostDto postDto) {
+		return service.update(id, postDto);
+	}
+
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable Long id) {
+		service.delete(id);
+	}
 }

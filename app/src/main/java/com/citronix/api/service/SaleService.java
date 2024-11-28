@@ -9,9 +9,13 @@ import com.citronix.api.dto.post.SalePostDto;
 
 @Service
 public interface SaleService {
-    List<SaleGetDto> getAll();
-    SaleGetDto findById(Long id);
-    SaleGetDto add(SalePostDto dto);
-    SaleGetDto update(Long id, SalePostDto dto);
-    void delete(Long id);
+	List<SaleGetDto> getAll(Integer page);
+
+	SaleGetDto findById(Long id);
+
+	SaleGetDto add(SalePostDto dto);
+
+	SaleGetDto update(Long id, SalePostDto dto);
+
+	void delete(Long id);
 }
