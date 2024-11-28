@@ -11,9 +11,12 @@ import org.springframework.stereotype.Service;
 import com.citronix.api.dto.get.HarvestGetDto;
 import com.citronix.api.dto.post.HarvestPostDto;
 import com.citronix.api.entity.Harvest;
+import com.citronix.api.entity.HarvestDetail;
+import com.citronix.api.entity.Tree;
 import com.citronix.api.exception.ElementNotFoundException;
 import com.citronix.api.exception.InvalidDataException;
 import com.citronix.api.mapper.HarvestMapper;
+import com.citronix.api.repository.HarvestDetailRepository;
 import com.citronix.api.repository.HarvestRepository;
 import com.citronix.api.service.HarvestService;
 import com.citronix.api.validation.HarvestValidator;
@@ -22,6 +25,8 @@ import com.citronix.api.validation.HarvestValidator;
 public class HarvestServiceImpl implements HarvestService {
 	@Autowired
 	HarvestRepository repository;
+	@Autowired
+	HarvestDetailRepository detailRepository;
 	@Autowired
 	HarvestMapper mapper;
 	@Autowired
@@ -44,7 +49,6 @@ public class HarvestServiceImpl implements HarvestService {
 				.orElseThrow(() -> new ElementNotFoundException(Harvest.class, id));
 	}
 
-
 	@Override
 	public HarvestGetDto add(HarvestPostDto dto) {
 		Harvest findHarvest = repository.findBySeasonAndHarvestYearAndFieldId(
@@ -54,22 +58,35 @@ public class HarvestServiceImpl implements HarvestService {
 			harvest.setSeason(validator.figureOutSeason(harvest.getHarvestDate()));
 			harvest.setHarvestYear(harvest.getHarvestDate().getYear());
 			harvest.setQuantityKg(harvest.figureOutQuantityKg());
-			return mapper.toDto(repository.save(harvest));
+
+			Harvest savedHarvest = repository.save(harvest);
+			addHarvestDetail(savedHarvest.getField().getTrees(), savedHarvest);
+			return mapper.toDto(savedHarvest);
 		} else {
 			throw new InvalidDataException("This field was already been harvested in this season in the year.");
 		}
 	}
 
-    public HarvestGetDto update(Long id, HarvestPostDto postDto){
-        findById(id);
-        Harvest harvest = mapper.toEntity(postDto);
-        harvest.setId(id);
-        harvest.setSeason(validator.figureOutSeason(harvest.getHarvestDate()));
-        harvest.setHarvestYear(harvest.getHarvestDate().getYear());
-        harvest.setQuantityKg(harvest.figureOutQuantityKg());
-        // harvest.setSale(harvest.getSale());
-        return mapper.toDto(repository.save(harvest));
-    }
+	private void addHarvestDetail(List<Tree> trees, Harvest harvest) {
+		trees.forEach(t -> {
+			HarvestDetail detail = HarvestDetail.builder().tree(t).harvest(harvest).unitQuantityKg(t.getProductivity())
+					.build();
+			detailRepository.save(detail);
+		});
+
+	}
+
+	@Override
+	public HarvestGetDto update(Long id, HarvestPostDto postDto) {
+		findById(id);
+		Harvest harvest = mapper.toEntity(postDto);
+		harvest.setId(id);
+		harvest.setSeason(validator.figureOutSeason(harvest.getHarvestDate()));
+		harvest.setHarvestYear(harvest.getHarvestDate().getYear());
+		harvest.setQuantityKg(harvest.figureOutQuantityKg());
+		// harvest.setSale(harvest.getSale());
+		return mapper.toDto(repository.save(harvest));
+	}
 
 	@Override
 	public void delete(Long id) {
