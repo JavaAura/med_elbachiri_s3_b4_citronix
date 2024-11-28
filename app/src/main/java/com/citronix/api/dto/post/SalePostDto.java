@@ -20,7 +20,7 @@ public class SalePostDto {
     @NotNull(message = "harvestId is required")
     Long harvestId;
 
-    @NotNull(message = "clientId must be")
+    @NotNull(message = "must be sold to a client, 'clientId' missing")
     Long clientId;
 
 }

@@ -18,4 +18,8 @@ public interface SaleMapper extends BaseMapper<Sale, SalePostDto, SaleGetDto> {
     @Mapping(source = "harvestId", target = "harvest")
     @Mapping(source = "clientId", target = "client")
     Sale toEntity(SalePostDto postDto);
+
+    @Mapping(source = "harvest.id", target = "harvestId")
+    @Mapping(source = "client.id", target = "clientId")
+    SaleGetDto toDto(Sale sale);
 }
