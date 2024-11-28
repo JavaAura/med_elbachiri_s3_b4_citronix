@@ -38,3 +38,4 @@ mvnw.cmd
 .mvn/
 mvnw*
 run.sh*
+/bin/

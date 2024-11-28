@@ -9,9 +9,13 @@ import com.citronix.api.dto.post.TreePostDto;
 
 @Service
 public interface TreeService {
-    List<TreeGetDto> getAll();
-    TreeGetDto findById(Long id);
-    TreeGetDto add(TreePostDto dto);
-    TreeGetDto update(Long id, TreePostDto dto);
-    void delete(Long id);
+	List<TreeGetDto> getAll(Integer page);
+
+	TreeGetDto findById(Long id);
+
+	TreeGetDto add(TreePostDto dto);
+
+	TreeGetDto update(Long id, TreePostDto dto);
+
+	void delete(Long id);
 }
