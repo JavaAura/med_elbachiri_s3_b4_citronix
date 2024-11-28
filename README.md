@@ -46,7 +46,7 @@ Ensure the following are installed on your machine:
 1. Clone the repository:
    ```bash
    git clone https://github.com/bachiriy/citronix
-   cd Citronix
+   cd app
 2. Build and run the application:
     ```bash
     mvn spring-boot:run
