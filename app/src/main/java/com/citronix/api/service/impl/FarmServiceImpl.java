@@ -27,7 +27,7 @@ public class FarmServiceImpl implements FarmService {
 	@Override
 	public List<FarmGetDto> getAll(Integer page) {
 		int size = 3;
-		Pageable pageable = PageRequest.of(page, 3);
+		Pageable pageable = PageRequest.of(page, size);
 		List<Farm> farms = repository.findAll(pageable).getContent();
 		return farms.stream().map(farm -> mapper.toDto(farm)).collect(Collectors.toList());
 	}
