@@ -10,10 +10,15 @@ import com.citronix.api.entity.Harvest;
 
 @Service
 public interface HarvestService {
-    List<HarvestGetDto> getAll();
-    HarvestGetDto findById(Long id);
-    HarvestGetDto add(HarvestPostDto dto);
-    HarvestGetDto update(Long id, HarvestPostDto dto);
-    void delete(Long id);
-    Harvest getById(Long id);
+	List<HarvestGetDto> getAll(Integer page);
+
+	HarvestGetDto findById(Long id);
+
+	HarvestGetDto add(HarvestPostDto dto);
+
+	HarvestGetDto update(Long id, HarvestPostDto dto);
+
+	void delete(Long id);
+
+	Harvest getById(Long id);
 }
