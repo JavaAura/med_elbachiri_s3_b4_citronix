@@ -20,10 +20,10 @@ public interface HarvestMapper extends BaseMapper<Harvest, HarvestPostDto, Harve
 
     @Mapping(source = "field.id", target = "fieldId")
     @Mapping(source = "quantityKg", target = "quantityKg")
-    // @Mapping(source = "sale.id", target = "saleId")
+    @Mapping(source = "sale.id", target = "saleId")
     HarvestGetDto toDto(Harvest harvest);
 
     Harvest toEntity(HarvestGetDto getDto);
 
-    // List<Harvest> toDto(List<HarvestGetDto> getDtos);
+    List<HarvestGetDto> toDtos(List<Harvest> harvests);
 }
