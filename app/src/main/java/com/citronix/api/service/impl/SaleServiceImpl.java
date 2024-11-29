@@ -39,23 +39,26 @@ public class SaleServiceImpl implements SaleService {
 	}
 
 	@Override
-	public SaleGetDto add(SalePostDto dto) {
-		Sale findSale = repository.findByHarvestId(dto.getHarvestId());
-		if (findSale == null) {
-			Sale sale = mapper.toEntity(dto);
-			sale.setQuantityKg(sale.getHarvest().getQuantityKg());
-			return mapper.toDto(repository.save(sale));
-		} else {
-			throw new InvalidDataException("The harvest was already sold.");
-		}
-	}
+    public SaleGetDto add(SalePostDto dto){
+        Sale findSale = repository.findByHarvestId(dto.getHarvestId());
+        if (findSale == null) {
+            Sale sale = mapper.toEntity(dto);
+            sale.setQuantityKg(sale.getHarvest().getQuantityKg());
+            sale.setIncome(sale.figureOutIncome());
+            return mapper.toDto(repository.save(sale));
+        } else throw new InvalidDataException("The harvest was already sold.");
+    }
 
 	@Override
-	public SaleGetDto update(Long id, SalePostDto postDto) {
-		findById(id);
-		postDto.setId(id);
-		return mapper.toDto(repository.save(mapper.toEntity(postDto)));
-	}
+    public SaleGetDto update(Long id, SalePostDto postDto){
+        findById(id);
+        postDto.setId(id);
+        Sale sale = mapper.toEntity(postDto);
+        sale.setIncome(sale.figureOutIncome());
+        sale.setQuantityKg(sale.getHarvest().getQuantityKg());
+        return mapper.toDto(repository.save(sale));
+    }
+
 
 	@Override
 	public void delete(Long id) {
